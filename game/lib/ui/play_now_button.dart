@@ -11,8 +11,10 @@ class PlayNowButton extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(40),
         child: Container(
+          decoration: const BoxDecoration(
+            color: Color.fromRGBO(255, 153, 51, 1),
+          ),
           alignment: Alignment.center,
-          color: const Color.fromRGBO(255, 153, 51, 1),
           height: DeviceUtils.getScaledHeight(context, 0.08),
           width: DeviceUtils.getScaledWidth(context, 0.7),
           child: Text(
