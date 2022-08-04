@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game/utils/device_utils.dart';
+import '../screens/quiz_page.dart';
 
 class PlayNowButton extends StatelessWidget {
   const PlayNowButton({Key? key}) : super(key: key);
@@ -7,7 +8,9 @@ class PlayNowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(QuizScreen.routeName);
+      },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(40),
         child: Container(

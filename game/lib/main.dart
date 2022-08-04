@@ -5,6 +5,7 @@ import 'package:game/ui/bottom_tab_bar.dart';
 import 'package:game/ui/bottom_tab_item.dart';
 import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
+import './screens/quiz_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +22,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        routes: {
+              // '/': ((ctx) => ProductsOverview()),
+              QuizScreen.routeName: (context) => QuizScreen(question: "how much do i weight"),
+            },
     );
   }
 }

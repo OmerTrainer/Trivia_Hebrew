@@ -7,4 +7,7 @@ class Assets {
   static const String settingsImage = '$_imageBase/settings.png';
   static const String profileImage = '$_imageBase/profile.png';
   static const String peakcockImage = '$_imageBase/peakcock.png';
+  static const String backgroundforest='$_imageBase/background_forest.png';
+  static const String monkey ='$_imageBase/monkey.png';
+  static const String hourGlass='$_imageBase/hourGlass.png';
 }
