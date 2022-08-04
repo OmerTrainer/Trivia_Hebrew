@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game/assets.dart';
+import 'package:game/screens/home_page.dart';
 import 'package:game/ui/bottom_tab_bar.dart';
 import 'package:game/ui/bottom_tab_item.dart';
 import 'package:game/ui/play_now_button.dart';
@@ -44,27 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
           image: AssetImage(Assets.backgroundImage),
         ),
       ),
-      child: Scaffold(
+      child: const Scaffold(
         backgroundColor: Colors.transparent,
-        bottomNavigationBar: const BottomNavBar(),
+        bottomNavigationBar: BottomNavBar(),
         body: SizedBox.expand(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Image.asset(Assets.peakcockImage),
-                    const Positioned(bottom: 0, child: PlayNowButton()),
-                  ],
-                ),
-              )
-            ],
-          ),
+          child: HomePage(),
         ),
       ),
     );
