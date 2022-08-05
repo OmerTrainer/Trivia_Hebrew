@@ -12,6 +12,11 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  bool isHomeTabSelected = true;
+  bool isShopTabSelected = false;
+  bool isSettingsTabSelected = false;
+  bool isProfileTabSelected = false;
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -25,19 +30,51 @@ class _BottomNavBarState extends State<BottomNavBar> {
           children: [
             BottomTabItem(
               imageUrl: Assets.shopImage,
-              onPressed: () => {},
+              onPressed: () => {
+                setState(() {
+                  isShopTabSelected = !isShopTabSelected;
+                  isHomeTabSelected = false;
+                  isSettingsTabSelected = false;
+                  isProfileTabSelected = false;
+                })
+              },
+              isTabSelected: isShopTabSelected,
             ),
             BottomTabItem(
               imageUrl: Assets.homeImage,
-              onPressed: () => {},
+              onPressed: () => {
+                setState(() {
+                  isHomeTabSelected = !isHomeTabSelected;
+                  isShopTabSelected = false;
+                  isSettingsTabSelected = false;
+                  isProfileTabSelected = false;
+                })
+              },
+              isTabSelected: isHomeTabSelected,
             ),
             BottomTabItem(
               imageUrl: Assets.settingsImage,
-              onPressed: () => {},
+              onPressed: () => {
+                setState(() {
+                  isSettingsTabSelected = !isSettingsTabSelected;
+                  isShopTabSelected = false;
+                  isHomeTabSelected = false;
+                  isProfileTabSelected = false;
+                })
+              },
+              isTabSelected: isSettingsTabSelected,
             ),
             BottomTabItem(
               imageUrl: Assets.profileImage,
-              onPressed: () => {},
+              onPressed: () => {
+                setState(() {
+                  isProfileTabSelected = !isProfileTabSelected;
+                  isShopTabSelected = false;
+                  isSettingsTabSelected = false;
+                  isHomeTabSelected = false;
+                })
+              },
+              isTabSelected: isProfileTabSelected,
             ),
           ],
         ),
