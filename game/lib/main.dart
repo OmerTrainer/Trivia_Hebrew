@@ -45,10 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _userData == null
           ? showDialog(
+              barrierDismissible: false,
               context: context,
               builder: ((context) => AlertDialog(
                     content: ElevatedButton(
-                        child: Text('Login'),
+                        child: Text('התחבר באמצעות פייסבוק'),
                         onPressed: () async {
                           final result = await FacebookAuth.i
                               .login(permissions: ["public_profile", "email"]);
@@ -58,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                             setState(() {
                               _userData = requestData;
+                              Navigator.of(context, rootNavigator: true).pop();
                             });
                           }
                         }),
