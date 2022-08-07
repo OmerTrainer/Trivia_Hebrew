@@ -16,7 +16,7 @@ class PlayNowButton extends StatelessWidget {
           height: DeviceUtils.getScaledHeight(context, 0.08),
           width: DeviceUtils.getScaledWidth(context, 0.7),
           child: Text(
-            '!שחק עכשיו ',
+            '!שחק עכשיו',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
