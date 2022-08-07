@@ -5,13 +5,65 @@ import 'package:game/ui/bottom_tab_bar.dart';
 import 'package:game/ui/bottom_tab_item.dart';
 import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
+import 'dart:async';
 
-class QuizScreen extends StatelessWidget {
+class QuizScreen extends StatefulWidget {
   static const routeName = '/quiz-page';
 
   String question;
 
   QuizScreen({required this.question});
+
+  @override
+  State<QuizScreen> createState() => _QuizScreenState();
+}
+
+class _QuizScreenState extends State<QuizScreen> {
+
+  Widget buildTime() {
+    return Text("$seconds",
+        style: TextStyle(
+          fontSize: 100,
+          letterSpacing: 0,
+          fontWeight: FontWeight.bold,
+          foreground: Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 10
+            ..color = Color(0xFF355036),
+        ));
+  }
+
+  Timer? timer;
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      setState(() {
+        if (seconds > 0) {
+          seconds--;
+          if(width>0){
+          width -= 7.611428571428571;
+          }
+          if(width<=0){
+            width=0;
+          }
+
+        }
+      });
+    });
+  }
+
+  late int seconds;
+  late double width =DeviceUtils.getScaledWidth(context, 0.37);
+
+  @override
+  void initState() {
+    super.initState();
+    seconds = 20;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    width =   DeviceUtils.getScaledWidth(context, 0.37);
+    });
+    startTimer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,55 +95,89 @@ class QuizScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Transform.translate(
-                    offset:
-                        Offset(-DeviceUtils.getScaledWidth(context, 0.05), 0),
-                    child: Container(
-                      width: DeviceUtils.getScaledWidth(context, 0.37),
-                      height: DeviceUtils.getScaledHeight(context, 0.07),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: const Color(0xFFA2B53A)),
+                Transform.translate(
+                  offset: Offset(-DeviceUtils.getScaledWidth(context, 0.07),0),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(60),
+                      child: Stack(children: [
+                        AnimatedContainer(
+                          duration: Duration(seconds: 1),
+                          width: DeviceUtils.getScaledWidth(context, 0.37),
+                          height: DeviceUtils.getScaledHeight(context, 0.07),
+                          decoration: BoxDecoration(
+                              color: Colors.amber,),
+                        ),
+                        AnimatedContainer(
+                          duration: Duration(seconds: 1),
+                          width: width,
+                          height: DeviceUtils.getScaledHeight(context, 0.07),
+                          decoration: BoxDecoration(
+                              color: const Color(0xFFA2B53A)),
+                        ),
+                      ]),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomLeft,
+                Expanded(
                   child: Stack(
+                    alignment: Alignment.centerLeft,
                     children: [
                       Container(
-                        width: DeviceUtils.getScaledWidth(context, 0.10),
-                        height: DeviceUtils.getScaledHeight(context, 0.06),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFB3C519),
-                          border:
-                              Border.all(color: Color(0xFF355036), width: 2),
-                          shape: BoxShape.circle,
+                        width: DeviceUtils.getScaledWidth(context, 0.13),
+                        height: DeviceUtils.getScaledHeight(context, 0.13),
+                        child: Image.asset(
+                          Assets.hourGlass,
+                          fit: BoxFit.cover,
                         ),
-                        child: FittedBox(
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Text(
-                                "15",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  foreground: Paint()
-                                    ..style = PaintingStyle.stroke
-                                    ..strokeWidth = 0.1
-                                    ..color = const Color(0xFFFFFFFF),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Transform.translate(
+                          offset: Offset(
+                              -DeviceUtils.getScaledWidth(context, 0.06),
+                              DeviceUtils.getScaledHeight(context, 0.045)),
+                          child: Container(
+                            width: DeviceUtils.getScaledWidth(context, 0.15),
+                            height: DeviceUtils.getScaledHeight(context, 0.06),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFB3C519),
+                              border: Border.all(
+                                  color: Color(0xFF355036), width: 2),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Stack(children: [
+                                Text(
+                                  seconds.toString(),
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.bold,
+                                    foreground: Paint()
+                                      ..style = PaintingStyle.stroke
+                                      ..strokeWidth = 4
+                                      ..color = Color(0xFF355036),
+                                  ),
                                 ),
-                                textAlign: TextAlign.center,
-                              ),
+                                Text(
+                                  seconds.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 25,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ]),
                             ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),

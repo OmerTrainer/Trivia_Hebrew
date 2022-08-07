@@ -9,5 +9,5 @@ class Assets {
   static const String peakcockImage = '$_imageBase/peakcock.png';
   static const String backgroundforest='$_imageBase/background_forest.png';
   static const String monkey ='$_imageBase/monkey.png';
-  static const String hourGlass='$_imageBase/hourGlass.png';
+  static const String hourGlass='$_imageBase/hour_glass.png';
 }
