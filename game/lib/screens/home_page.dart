@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:game/ui/top_bar.dart';
 
 import '../assets.dart';
 import '../ui/play_now_button.dart';
@@ -23,14 +21,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(25),
-            child: Container(
-              color: const Color.fromRGBO(0, 171, 189, 0.8),
-              height: DeviceUtils.getScaledHeight(context, 0.1),
-              width: DeviceUtils.getScaledWidth(context, 0.75),
-            ),
-          ),
+          const TopBar(userName: 'omercohen'),
           const Spacer(),
           Container(
             height: DeviceUtils.getScaledHeight(context, 0.41),

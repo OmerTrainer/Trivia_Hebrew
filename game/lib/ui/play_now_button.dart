@@ -8,22 +8,22 @@ class PlayNowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {},
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(40),
-        child: Container(
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(255, 153, 51, 1),
-          ),
-          alignment: Alignment.center,
-          height: DeviceUtils.getScaledHeight(context, 0.08),
-          width: DeviceUtils.getScaledWidth(context, 0.7),
-          child: Text(
-            '!שחק עכשיו ',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: DeviceUtils.getScaledFontSize(context, 28),
-            ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius:
+              BorderRadius.circular(DeviceUtils.getScaledHeight(context, 0.04)),
+          color: const Color.fromRGBO(255, 153, 51, 1),
+          boxShadow: kElevationToShadow[24],
+        ),
+        alignment: Alignment.center,
+        height: DeviceUtils.getScaledHeight(context, 0.08),
+        width: DeviceUtils.getScaledWidth(context, 0.7),
+        child: Text(
+          '!שחק עכשיו ',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: DeviceUtils.getScaledFontSize(context, 28),
           ),
         ),
       ),
