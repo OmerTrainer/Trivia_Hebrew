@@ -25,7 +25,7 @@ class QuizScreen extends StatelessWidget {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
-             height: DeviceUtils.getScaledHeight(context, 0.25),
+            height: DeviceUtils.getScaledHeight(context, 0.25),
             width: double.infinity,
             padding: const EdgeInsets.all(1),
             child: Row(
@@ -61,23 +61,34 @@ class QuizScreen extends StatelessWidget {
                   alignment: Alignment.bottomLeft,
                   child: Stack(
                     children: [
-                         Container(
-                          width: DeviceUtils.getScaledWidth(context, 0.10),
-                          height: DeviceUtils.getScaledHeight(context, 0.06),
-                          decoration: BoxDecoration(
-                            color:  Color(0xFFB3C519),
-                            border: Border.all(color: Color(0xFF355036),width: 2),
-                            shape: BoxShape.circle, 
-                              ),
-                          child: 
-                           FittedBox(
-                            child: Text("15",style: TextStyle(fontSize: 2,fontWeight: FontWeight.bold,foreground: Paint()
-                ..style = PaintingStyle.stroke
-                ..strokeWidth = 0.1
-                ..color = const Color(0xFF355036),color: Colors.white),),
-                            )
-                            ,
+                      Container(
+                        width: DeviceUtils.getScaledWidth(context, 0.10),
+                        height: DeviceUtils.getScaledHeight(context, 0.06),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFB3C519),
+                          border:
+                              Border.all(color: Color(0xFF355036), width: 2),
+                          shape: BoxShape.circle,
                         ),
+                        child: FittedBox(
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Text(
+                                "15",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  foreground: Paint()
+                                    ..style = PaintingStyle.stroke
+                                    ..strokeWidth = 0.1
+                                    ..color = const Color(0xFFFFFFFF),
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 )
