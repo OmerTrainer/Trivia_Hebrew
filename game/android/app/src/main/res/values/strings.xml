@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Trivia</string>
+  <string name="facebook_app_id">1120638511880933</string>
+  <string name="fb_login_protocol_scheme">fb1120638511880933</string>
+  <string name="facebook_client_token">f2a256ab042bb28f7496dfb999e41892</string>
+</resources>
+
+

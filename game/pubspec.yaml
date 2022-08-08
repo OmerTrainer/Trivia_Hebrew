@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   floating_bottom_bar: ^0.0.1
   flutter_svg: ^1.1.2
+  flutter_facebook_auth: ^4.4.0+1
 
 dev_dependencies:
   flutter_test:
