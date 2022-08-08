@@ -45,7 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _userData == null
@@ -53,21 +52,121 @@ class _MyHomePageState extends State<MyHomePage> {
               barrierDismissible: false,
               context: context,
               builder: ((context) => AlertDialog(
-                    content: ElevatedButton(
-                        child: Text('התחבר באמצעות פייסבוק'),
-                        onPressed: () async {
-                          final result = await FacebookAuth.i
-                              .login(permissions: ["public_profile", "email"]);
-                          if (result.status == LoginStatus.success) {
-                            final requestData = await FacebookAuth.i
-                                .getUserData(fields: "email, name");
+                    backgroundColor: const Color.fromRGBO(161, 199, 224, 0.75),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: GestureDetector(
+                              onTap: (() async {}),
+                              child: Container(
+                                color: Colors.white,
+                                height:
+                                    DeviceUtils.getScaledHeight(context, 0.08),
+                                width: DeviceUtils.getScaledWidth(context, 0.6),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                        top: 6,
+                                        bottom: 6,
+                                      ),
+                                      child: Image.asset(
+                                        Assets.googleIcon,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        right: 20.0,
+                                        left: 10,
+                                      ),
+                                      child: Text(
+                                        'התחברות עם גוגל',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              DeviceUtils.getScaledFontSize(
+                                            context,
+                                            14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: GestureDetector(
+                              onTap: (() async {
+                                final result = await FacebookAuth.i.login(
+                                    permissions: ["public_profile", "email"]);
+                                if (result.status == LoginStatus.success) {
+                                  final requestData = await FacebookAuth.i
+                                      .getUserData(fields: "email, name");
 
-                            setState(() {
-                              _userData = requestData;
-                              Navigator.of(context, rootNavigator: true).pop();
-                            });
-                          }
-                        }),
+                                  setState(() {
+                                    _userData = requestData;
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop();
+                                  });
+                                }
+                              }),
+                              child: Container(
+                                color: const Color.fromRGBO(0, 153, 221, 0.5),
+                                height:
+                                    DeviceUtils.getScaledHeight(context, 0.08),
+                                width: DeviceUtils.getScaledWidth(context, 0.6),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                        top: 6,
+                                        bottom: 6,
+                                      ),
+                                      child: Image.asset(
+                                        Assets.facebookIcon,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        right: 20.0,
+                                        left: 10,
+                                      ),
+                                      child: Text(
+                                        'התחברות עם פייסבוק',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              DeviceUtils.getScaledFontSize(
+                                            context,
+                                            14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   )),
             )
           : null;

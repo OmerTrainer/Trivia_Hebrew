@@ -10,4 +10,6 @@ class Assets {
   static const String backgroundforest='$_imageBase/background_forest.png';
   static const String monkey ='$_imageBase/monkey.png';
   static const String hourGlass='$_imageBase/hour_glass.png';
+  static const String facebookIcon = '$_imageBase/facebookIcon.png';
+  static const String googleIcon = '$_imageBase/googleLogo.png';
 }
