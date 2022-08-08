@@ -109,10 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                     permissions: ["public_profile", "email"]);
                                 if (result.status == LoginStatus.success) {
                                   final requestData = await FacebookAuth.i
-                                      .getUserData(fields: "email, name");
+                                      .getUserData(
+                                          fields: "email, name, picture");
 
                                   setState(() {
                                     _userData = requestData;
+                                    print(_userData);
                                     Navigator.of(context, rootNavigator: true)
                                         .pop();
                                   });
