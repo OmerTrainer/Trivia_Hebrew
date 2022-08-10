@@ -9,6 +9,7 @@ import 'package:game/ui/bottom_tab_item.dart';
 import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
 import 'dart:async';
+import 'dart:html';
 import '../ui/quiz_TopBar.dart';
 import '../entities/questions_class.dart';
 
@@ -47,17 +48,16 @@ class _QuizScreenState extends State<QuizScreen> {
                       notrealanswer = index;
                       pressAttentionNotReal = true;
                       isDisable = true;
-                      print('object');
                     });
                   }
                 },
           child: Container(
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color:
              pressAttention && widget.question.answers[index].correctAnswer
-                    ? Colors.green
+                    ? Color(0xFFB8D192)
                     : pressAttentionNotReal &&
                             widget.question.answers[index].correctAnswer
-                        ? Colors.green
+                        ? Color(0xFFB8D192)
                         : notrealanswer == index
                             ? Colors.red
                             : Color(0xFFC3C8DC),),

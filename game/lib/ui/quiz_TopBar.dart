@@ -83,7 +83,7 @@ class TopOfThePage extends StatelessWidget {
                       width: DeviceUtils.getScaledWidth(context, 0.15),
                       height: DeviceUtils.getScaledHeight(context, 0.06),
                       decoration: BoxDecoration(
-                        color: Color(0xFFB3C519),
+                        color:  seconds > 5 ? Color(0xFFB3C519): Color(0xFFFF0202),
                         border: Border.all(color: Color(0xFF355036), width: 2),
                         shape: BoxShape.circle,
                       ),
@@ -108,7 +108,7 @@ class TopOfThePage extends StatelessWidget {
                                 fontSize: 25,
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.bold,
-                                color: seconds > 5 ? Colors.white : Colors.red,
+                                color: Colors.white,
                               ),
                             )
                           ] else
