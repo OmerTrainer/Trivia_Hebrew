@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game/assets.dart';
+import 'package:game/interfaces/user.dart';
 import 'package:game/ui/bottom_tab_bar.dart';
 import 'package:game/ui/bottom_tab_item.dart';
 import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
+import 'package:game/services/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -114,6 +116,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
                                   setState(() {
                                     _userData = requestData;
+                                    Services.createUser(
+                                        context,
+                                        User(
+                                          name: _userData!['name'],
+                                          f_id: _userData!['id'],
+                                          email: _userData!['email'],
+                                        ));
                                     print(_userData);
                                     Navigator.of(context, rootNavigator: true)
                                         .pop();
