@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game/assets.dart';
 import 'package:game/screens/home_page.dart';
 import 'package:game/ui/bottom_tab_bar.dart';
-import 'package:game/ui/bottom_tab_item.dart';
-import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/user_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,12 +17,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ListenableProvider<FacebookUser>(create: (_) => FacebookUser()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -43,6 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      FacebookUser facebookUser =
+          Provider.of<FacebookUser>(context, listen: false);
       _userData == null
           ? showDialog(
               barrierDismissible: false,
@@ -115,7 +122,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
                                   setState(() {
                                     _userData = requestData;
-                                    print(_userData);
+                                    facebookUser.setEmail(_userData!['email']);
+                                    facebookUser.setImage(
+                                        _userData!['picture']['data']['url']);
+                                    facebookUser.setName(_userData!['name']);
+                                    facebookUser.setIsLoggedIn();
                                     Navigator.of(context, rootNavigator: true)
                                         .pop();
                                   });
