@@ -1,5 +1,5 @@
- import 'package:flutter/material.dart';
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game/assets.dart';
 import 'package:game/ui/bottom_tab_bar.dart';
@@ -8,8 +8,6 @@ import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
 import 'dart:async';
 
- 
- 
 class TopOfThePage extends StatelessWidget {
   const TopOfThePage({
     Key? key,
@@ -47,12 +45,11 @@ class TopOfThePage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(60),
                 child: Stack(children: [
-                  AnimatedContainer(
-                    duration: Duration(seconds: 1),
+                  Container(
                     width: DeviceUtils.getScaledWidth(context, 0.37),
                     height: DeviceUtils.getScaledHeight(context, 0.07),
                     decoration: BoxDecoration(
-                      color: Colors.amber,
+                      color: Color(0xFFCCB178),
                     ),
                   ),
                   AnimatedContainer(
@@ -92,27 +89,32 @@ class TopOfThePage extends StatelessWidget {
                       ),
                       child: Center(
                         child: Stack(children: [
-                          Text(
-                            seconds.toString(),
-                            style: TextStyle(
-                              fontSize: 25,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.bold,
-                              foreground: Paint()
-                                ..style = PaintingStyle.stroke
-                                ..strokeWidth = 4
-                                ..color = Color(0xFF355036),
+                          if (seconds > 0) ...[
+                            Text(
+                              seconds.toString(),
+                              style: TextStyle(
+                                fontSize: 25,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.bold,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 4
+                                  ..color = Color(0xFF355036),
+                              ),
                             ),
-                          ),
-                          Text(
-                            seconds.toString(),
-                            style: const TextStyle(
-                              fontSize: 25,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
+                            Text(
+                              seconds.toString(),
+                              style: TextStyle(
+                                fontSize: 25,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.bold,
+                                color: seconds > 5 ? Colors.white : Colors.red,
+                              ),
+                            )
+                          ] else
+                            ...[
+                              Icon(Icons.lock)
+                            ]
                         ]),
                       ),
                     ),

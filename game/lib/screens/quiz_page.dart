@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game/assets.dart';
 import 'package:game/ui/bottom_tab_bar.dart';
@@ -7,27 +10,78 @@ import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
 import 'dart:async';
 import '../ui/quiz_TopBar.dart';
+import '../entities/questions_class.dart';
 
 class QuizScreen extends StatefulWidget {
   static const routeName = '/quiz-page';
 
-  final String question;
-  
+  final Questions question;
 
   QuizScreen({required this.question});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
-  
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-
-  
-
-
-  
   Timer? timer;
+  bool pressAttention = false;
+  bool pressAttentionNotReal = false;
+  int notrealanswer = -1;
+  bool isDisable = false;
+
+  List<Widget> buildAnswers(List answer) {
+    List<Widget> buttons = [];
+    for (var index = 0; index < answer.length; index++) {
+      buttons.add(GestureDetector(
+          onTap: isDisable
+              ? () {}
+              : () {
+                  if (widget.question.answers[index].correctAnswer) {
+                    setState(() {
+                      pressAttention = true;
+                      isDisable = true;
+                    });
+                  } else {
+                    setState(() {
+                      notrealanswer = index;
+                      pressAttentionNotReal = true;
+                      isDisable = true;
+                      print('object');
+                    });
+                  }
+                },
+          child: Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color:
+             pressAttention && widget.question.answers[index].correctAnswer
+                    ? Colors.green
+                    : pressAttentionNotReal &&
+                            widget.question.answers[index].correctAnswer
+                        ? Colors.green
+                        : notrealanswer == index
+                            ? Colors.red
+                            : Color(0xFFC3C8DC),),
+            width: DeviceUtils.getScaledWidth(context, 0.8),
+            height: DeviceUtils.getScaledHeight(context, 0.07),
+            margin: const EdgeInsets.all(8),
+            child: Center(
+              child: Text(
+                widget.question.answers[index].title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: DeviceUtils.getScaledFontSize(context, 14),
+                ),
+              ),
+            ),
+          )));
+    }
+    return buttons;
+  }
+
+  void test(bool goodanswer, int questionINdex) {
+    if (goodanswer == false) {}
+  }
 
   void startTimer() {
     timer = Timer.periodic(Duration(seconds: 1), (_) {
@@ -40,6 +94,9 @@ class _QuizScreenState extends State<QuizScreen> {
           if (width <= 0) {
             width = 0;
           }
+        }
+        if(seconds == 0){
+          Navigator.of(context).pop();
         }
       });
     });
@@ -72,14 +129,35 @@ class _QuizScreenState extends State<QuizScreen> {
           body: Column(
             children: [
               TopOfThePage(width: width, seconds: seconds),
+              // middle of the page
               Container(
                 color: Colors.white.withOpacity(0.5),
-                height: DeviceUtils.getScaledHeight(context, 0.30),
+                height: DeviceUtils.getScaledHeight(context, 0.35),
                 width: double.infinity,
-                child: Column(children: [
-                  Text('question')
-                ],),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        widget.question.question,
+                        style: TextStyle(
+                            fontSize:
+                                DeviceUtils.getScaledFontSize(context, 17),
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                      width: DeviceUtils.getScaledWidth(context, 0.78),
+                      height: DeviceUtils.getScaledHeight(context, 0.25),
+                      child: Image.network(
+                        widget.question.imageUrl,
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              //end of middle of the page
+              Column(children: buildAnswers(widget.question.answers))
             ],
           ),
         ));

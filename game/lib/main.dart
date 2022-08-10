@@ -7,13 +7,40 @@ import 'package:game/ui/bottom_tab_item.dart';
 import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
 import './screens/quiz_page.dart';
+import './entities/questions_class.dart';
+import './entities/answer.dart';
+import 'dart:math';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  var test = Questions(
+      question: "?באיזו סדרה הם מופיעים",
+      answers: [
+        Answer(
+          title: "אחת שיודעת",
+          correctAnswer: true,
+          id: Random().nextInt(2000),
+        ),
+        Answer(
+          title: "בתאל הבתולה",
+          correctAnswer: false,
+          id: Random().nextInt(2000),
+        ),
+        Answer(
+          title: "אחת asfljsangpsangpas",
+          correctAnswer: false,
+          id: Random().nextInt(2000),
+        ),
+        Answer(
+          title: "sga[poskg[paskg[askgלה",
+          correctAnswer: false,
+          id: Random().nextInt(2000),
+        )
+      ],
+      imageUrl: "https://data.whicdn.com/images/312976051/original.jpg");
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +50,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-        routes: {
-              // '/': ((ctx) => ProductsOverview()),
-              QuizScreen.routeName: (context) => QuizScreen(question: "how much do i weight"),
-            },
+      routes: {
+        // '/': ((ctx) => ProductsOverview()),
+        QuizScreen.routeName: (context) => QuizScreen(
+              question: test,
+            )
+      },
     );
   }
 }
