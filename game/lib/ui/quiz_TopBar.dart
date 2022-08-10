@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game/assets.dart';
-import 'package:game/ui/bottom_tab_bar.dart';
-import 'package:game/ui/bottom_tab_item.dart';
-import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
-import 'dart:async';
 
 class TopOfThePage extends StatelessWidget {
   const TopOfThePage({
@@ -48,15 +42,15 @@ class TopOfThePage extends StatelessWidget {
                   Container(
                     width: DeviceUtils.getScaledWidth(context, 0.37),
                     height: DeviceUtils.getScaledHeight(context, 0.07),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xFFCCB178),
                     ),
                   ),
                   AnimatedContainer(
-                    duration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
                     width: width,
                     height: DeviceUtils.getScaledHeight(context, 0.07),
-                    decoration: BoxDecoration(color: const Color(0xFFA2B53A)),
+                    decoration: const BoxDecoration(color: Color(0xFFA2B53A)),
                   ),
                 ]),
               ),
@@ -66,7 +60,7 @@ class TopOfThePage extends StatelessWidget {
             child: Stack(
               alignment: Alignment.centerLeft,
               children: [
-                Container(
+                SizedBox(
                   width: DeviceUtils.getScaledWidth(context, 0.13),
                   height: DeviceUtils.getScaledHeight(context, 0.13),
                   child: Image.asset(
@@ -83,8 +77,11 @@ class TopOfThePage extends StatelessWidget {
                       width: DeviceUtils.getScaledWidth(context, 0.15),
                       height: DeviceUtils.getScaledHeight(context, 0.06),
                       decoration: BoxDecoration(
-                        color:  seconds > 5 ? Color(0xFFB3C519): Color(0xFFFF0202),
-                        border: Border.all(color: Color(0xFF355036), width: 2),
+                        color: seconds > 5
+                            ? const Color(0xFFB3C519)
+                            : const Color(0xFFFF0202),
+                        border: Border.all(
+                            color: const Color(0xFF355036), width: 2),
                         shape: BoxShape.circle,
                       ),
                       child: Center(
@@ -99,12 +96,12 @@ class TopOfThePage extends StatelessWidget {
                                 foreground: Paint()
                                   ..style = PaintingStyle.stroke
                                   ..strokeWidth = 4
-                                  ..color = Color(0xFF355036),
+                                  ..color = const Color(0xFF355036),
                               ),
                             ),
                             Text(
                               seconds.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 25,
                                 letterSpacing: 0,
                                 fontWeight: FontWeight.bold,
@@ -112,9 +109,7 @@ class TopOfThePage extends StatelessWidget {
                               ),
                             )
                           ] else
-                            ...[
-                              Icon(Icons.lock)
-                            ]
+                            const Icon(Icons.lock)
                         ]),
                       ),
                     ),

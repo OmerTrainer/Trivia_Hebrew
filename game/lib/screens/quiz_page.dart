@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,7 +7,6 @@ import 'package:game/ui/bottom_tab_item.dart';
 import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
 import 'dart:async';
-import 'dart:html';
 import '../ui/quiz_TopBar.dart';
 import '../entities/questions_class.dart';
 
@@ -52,15 +49,18 @@ class _QuizScreenState extends State<QuizScreen> {
                   }
                 },
           child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color:
-             pressAttention && widget.question.answers[index].correctAnswer
-                    ? Color(0xFFB8D192)
-                    : pressAttentionNotReal &&
-                            widget.question.answers[index].correctAnswer
-                        ? Color(0xFFB8D192)
-                        : notrealanswer == index
-                            ? Colors.red
-                            : Color(0xFFC3C8DC),),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color:
+                  pressAttention && widget.question.answers[index].correctAnswer
+                      ? Color(0xFFB8D192)
+                      : pressAttentionNotReal &&
+                              widget.question.answers[index].correctAnswer
+                          ? Color(0xFFB8D192)
+                          : notrealanswer == index
+                              ? Colors.red
+                              : Color(0xFFC3C8DC),
+            ),
             width: DeviceUtils.getScaledWidth(context, 0.8),
             height: DeviceUtils.getScaledHeight(context, 0.07),
             margin: const EdgeInsets.all(8),
@@ -86,17 +86,19 @@ class _QuizScreenState extends State<QuizScreen> {
   void startTimer() {
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       setState(() {
-        if (seconds > 0) {
-          seconds--;
-          if (width > 0) {
-            width -= 7.611428571428571;
-          }
-          if (width <= 0) {
-            width = 0;
-          }
+        if (pressAttention == true || pressAttentionNotReal == true) {
+          timer!.cancel();
         }
-        if(seconds == 0){
-          Navigator.of(context).pop();
+        if (timer!.isActive) {
+          if (seconds > 0) {
+            seconds--;
+            if (width > 0) {
+              width -= 7.611428571428571;
+            }
+            if (width <= 0) {
+              width = 0;
+            }
+          }
         }
       });
     });
@@ -112,6 +114,7 @@ class _QuizScreenState extends State<QuizScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       width = DeviceUtils.getScaledWidth(context, 0.37);
     });
+
     startTimer();
   }
 
@@ -126,40 +129,94 @@ class _QuizScreenState extends State<QuizScreen> {
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: Column(
-            children: [
-              TopOfThePage(width: width, seconds: seconds),
-              // middle of the page
+          body: Stack(children: [
+            Column(
+              children: [
+                TopOfThePage(width: width, seconds: seconds),
+                // middle of the page
+                Stack(children: [
+                  Container(
+                    color: Colors.white.withOpacity(0.5),
+                    height: DeviceUtils.getScaledHeight(context, 0.35),
+                    width: double.infinity,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            widget.question.question,
+                            style: TextStyle(
+                                fontSize:
+                                    DeviceUtils.getScaledFontSize(context, 17),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          width: DeviceUtils.getScaledWidth(context, 0.78),
+                          height: DeviceUtils.getScaledHeight(context, 0.25),
+                          child: Image.network(
+                            widget.question.imageUrl,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ]),
+                //end of middle of the page
+                Column(children: buildAnswers(widget.question.answers))
+              ],
+            ),
+            if (seconds == 0) ...[
               Container(
-                color: Colors.white.withOpacity(0.5),
-                height: DeviceUtils.getScaledHeight(context, 0.35),
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        widget.question.question,
-                        style: TextStyle(
-                            fontSize:
-                                DeviceUtils.getScaledFontSize(context, 17),
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Container(
-                      width: DeviceUtils.getScaledWidth(context, 0.78),
-                      height: DeviceUtils.getScaledHeight(context, 0.25),
-                      child: Image.network(
-                        widget.question.imageUrl,
-                      ),
-                    ),
-                  ],
-                ),
+                color: Colors.white.withOpacity(0.4),
               ),
-              //end of middle of the page
-              Column(children: buildAnswers(widget.question.answers))
-            ],
-          ),
+              Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    color: const Color(0xFFA27264),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  width: 350,
+                  height: 100,
+                  child: Column(
+                    children: [
+                      Stack(children: [
+                        Text(
+                          "!נגמר הזמן",
+                          style: TextStyle(
+                            fontSize:
+                                DeviceUtils.getScaledFontSize(context, 21),
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 3
+                              ..color = Colors.black,
+                          ),
+                        ),
+                        Text(
+                          "!נגמר הזמן",
+                          style: TextStyle(
+                            fontSize:
+                                DeviceUtils.getScaledFontSize(context, 21),
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ]),
+                      Container(
+                        child: Image.asset(
+                          Assets.donkeyCrying,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ]
+          ]),
         ));
   }
 }
