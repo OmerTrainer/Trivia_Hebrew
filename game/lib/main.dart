@@ -6,6 +6,7 @@ import 'package:game/ui/bottom_tab_bar.dart';
 import 'package:game/ui/bottom_tab_item.dart';
 import 'package:game/ui/play_now_button.dart';
 import 'package:game/utils/device_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +38,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Map? _userData;
+  bool isFirstLogin = true;
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  Future<void> _incrementCounter() async {}
 
   @override
   void initState() {
@@ -118,6 +124,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                     Navigator.of(context, rootNavigator: true)
                                         .pop();
                                   });
+                                  final SharedPreferences prefs = await _prefs;
+
+                                  prefs.setString('email', _userData!['email']);
                                 }
                               }),
                               child: Container(
