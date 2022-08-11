@@ -43,6 +43,25 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+void connect(context, _userData) {
+  final forecast = Services.createUser(
+      context,
+      User(
+        name: _userData!['name'],
+        f_id: _userData!['id'],
+        email: _userData!['email'],
+      ));
+  forecast.then(
+    (value) => Services.updateOnlineStatues(
+        context,
+        User(
+          name: _userData!['name'],
+          f_id: _userData!['id'],
+          email: _userData!['email'],
+        )),
+  );
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   Map? _userData;
 
@@ -124,14 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                                   setState(() {
                                     _userData = requestData;
-                                    Services.createUser(
-                                        context,
-                                        User(
-                                          name: _userData!['name'],
-                                          f_id: _userData!['id'],
-                                          email: _userData!['email'],
-                                        ));
-                                    print(_userData);
+                                    connect(context, _userData);
+
                                     facebookUser.setEmail(_userData!['email']);
                                     facebookUser.setImage(
                                         _userData!['picture']['data']['url']);
@@ -201,11 +214,11 @@ class _MyHomePageState extends State<MyHomePage> {
           image: AssetImage(Assets.backgroundImage),
         ),
       ),
-      child: const Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.transparent,
         bottomNavigationBar: BottomNavBar(),
         body: SizedBox.expand(
-          child: HomePage(),
+          child: HomePage(userData: _userData),
         ),
       ),
     );

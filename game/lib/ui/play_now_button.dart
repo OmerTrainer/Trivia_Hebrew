@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:game/interfaces/user.dart';
 import 'package:game/utils/device_utils.dart';
+import 'package:game/services/services.dart';
 
 class PlayNowButton extends StatelessWidget {
-  const PlayNowButton({Key? key}) : super(key: key);
+  Map? userData;
+  PlayNowButton({Key? key, required this.userData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Services.lookingForGame(
+            context,
+            User(
+              name: userData!['name'],
+              f_id: userData!['id'],
+              email: userData!['email'],
+            ));
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius:

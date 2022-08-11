@@ -49,7 +49,7 @@ class HttpService {
 
   Future<http.Response> _deleteRequest(String endPoint, dynamic data) {
     return http.delete(
-      Uri.parse('$baseUrl/$endPoint/'),
+      Uri.parse('$baseUrl/$endPoint'),
       headers: _getRequestHeaders(),
       body: data,
     );
@@ -63,9 +63,10 @@ class HttpService {
 
   Future<http.Response> _putRequest(String endPoint, dynamic data) {
     return http.put(
-      Uri.parse('$baseUrl/$endPoint/'),
+      Uri.parse('$baseUrl/$endPoint'),
       headers: _getRequestHeaders(),
-      body: data,
+      encoding: Encoding.getByName("utf-8"),
+      body: jsonEncode(data),
     );
   }
 
