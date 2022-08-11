@@ -40,4 +40,16 @@ class Services {
       return null;
     }
   }
+
+  static Future<User?> stoplookingForGame(
+      BuildContext context, User user) async {
+    Response response =
+        await http.put('users/stop-looking-for-game', user.toJson(), context);
+    if (response.statusCode == 200) {
+      dynamic userJson = jsonDecode(response.body)['data'];
+      return User.fromJson(userJson);
+    } else {
+      return null;
+    }
+  }
 }
