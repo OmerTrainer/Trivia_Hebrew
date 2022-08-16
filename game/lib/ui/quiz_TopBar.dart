@@ -15,16 +15,16 @@ class TopOfThePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: DeviceUtils.getScaledHeight(context, 0.25),
+      height: DeviceUtils.getScaledHeight(context, 0.22),
       width: double.infinity,
-      child: Row(
+      child: Row( 
         children: [
           Expanded(
-            child: Container(
-              alignment: Alignment.centerLeft,
-              height: DeviceUtils.getScaledHeight(context, 0.20),
+            child: Align(
+              alignment: Alignment.topLeft,
               child: Image.asset(
                 Assets.monkey,
+                height: DeviceUtils.getScaledHeight(context, 0.20),
                 fit: BoxFit.contain,
               ),
             ),
