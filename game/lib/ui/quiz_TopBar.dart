@@ -14,108 +14,104 @@ class TopOfThePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: DeviceUtils.getScaledHeight(context, 0.25),
       width: double.infinity,
-      padding: const EdgeInsets.all(1),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            width: DeviceUtils.getScaledWidth(context, 0.4),
-            height: DeviceUtils.getScaledHeight(context, 0.28),
-            child: Transform.translate(
-              offset: Offset(-DeviceUtils.getScaledWidth(context, 0.05), 0),
+          Expanded(
+            child: Container(
+              alignment: Alignment.centerLeft,
+              height: DeviceUtils.getScaledHeight(context, 0.20),
               child: Image.asset(
                 Assets.monkey,
+                fit: BoxFit.contain,
               ),
             ),
           ),
-          Transform.translate(
-            offset: Offset(-DeviceUtils.getScaledWidth(context, 0.07), 0),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(60),
-                child: Stack(children: [
-                  Container(
-                    width: DeviceUtils.getScaledWidth(context, 0.37),
-                    height: DeviceUtils.getScaledHeight(context, 0.07),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFCCB178),
-                    ),
+          Container(
+            padding: EdgeInsets.only(top: 20),
+            alignment: Alignment.topCenter,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(DeviceUtils.getScaledWidth(context, 0.08)),
+              child: Stack(children: [
+                Container(
+                  width: DeviceUtils.getScaledWidth(context, 0.40),
+                  height: DeviceUtils.getScaledHeight(context, 0.07),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFCCB178),
                   ),
-                  AnimatedContainer(
-                    duration: const Duration(seconds: 1),
-                    width: width,
-                    height: DeviceUtils.getScaledHeight(context, 0.07),
-                    decoration: const BoxDecoration(color: Color(0xFFA2B53A)),
-                  ),
-                ]),
-              ),
+                ),
+                AnimatedContainer(
+                  duration: const Duration(seconds: 1),
+                  width: width,
+                  height: DeviceUtils.getScaledHeight(context, 0.07),
+                  decoration: const BoxDecoration(color: Color(0xFFA2B53A)),
+                ),
+              ]),
             ),
           ),
           Expanded(
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                SizedBox(
-                  width: DeviceUtils.getScaledWidth(context, 0.13),
-                  height: DeviceUtils.getScaledHeight(context, 0.13),
-                  child: Image.asset(
-                    Assets.hourGlass,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Transform.translate(
-                    offset: Offset(-DeviceUtils.getScaledWidth(context, 0.06),
-                        DeviceUtils.getScaledHeight(context, 0.045)),
-                    child: Container(
-                      width: DeviceUtils.getScaledWidth(context, 0.15),
-                      height: DeviceUtils.getScaledHeight(context, 0.06),
-                      decoration: BoxDecoration(
-                        color: seconds > 5
-                            ? const Color(0xFFB3C519)
-                            : const Color(0xFFFF0202),
-                        border: Border.all(
-                            color: const Color(0xFF355036), width: 2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Stack(children: [
-                          if (seconds > 0) ...[
-                            Text(
-                              seconds.toString(),
-                              style: TextStyle(
-                                fontSize: 25,
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.bold,
-                                foreground: Paint()
-                                  ..style = PaintingStyle.stroke
-                                  ..strokeWidth = 4
-                                  ..color = const Color(0xFF355036),
-                              ),
-                            ),
-                            Text(
-                              seconds.toString(),
-                              style: const TextStyle(
-                                fontSize: 25,
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            )
-                          ] else
-                            const Icon(Icons.lock)
-                        ]),
-                      ),
+            child: SizedBox(
+              width: DeviceUtils.getScaledHeight(context, 0.13),
+              height: DeviceUtils.getScaledHeight(context, 0.13),
+              child: Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      Assets.hourGlass,
+                      width: DeviceUtils.getScaledWidth(context, 0.11),
+                      height: DeviceUtils.getScaledHeight(context, 0.13),
+                      fit: BoxFit.contain,
                     ),
                   ),
-                ),
-              ],
+                  Center(
+                    child: Transform.translate(
+                      offset: Offset(-DeviceUtils.getScaledWidth(context, 0.05),
+                          DeviceUtils.getScaledHeight(context, 0.05)),
+                      child: Stack(alignment: Alignment.center, children: [
+                        Container(
+                          height: DeviceUtils.getScaledHeight(context, 0.06),
+                          decoration: BoxDecoration(
+                            color: seconds > 5
+                                ? const Color(0xFFB3C519)
+                                : const Color(0xFFFF0202),
+                            border: Border.all(
+                                color: const Color(0xFF355036), width: 2),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        Text(
+                          seconds.toString(),
+                          style: TextStyle(
+                            fontSize:
+                                DeviceUtils.getScaledHeight(context, 0.03),
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth =
+                                  DeviceUtils.getScaledHeight(context, 0.004)
+                              ..color = const Color(0xFF355036),
+                          ),
+                        ),
+                        Text(
+                          seconds.toString(),
+                          style: TextStyle(
+                            fontSize:
+                                DeviceUtils.getScaledHeight(context, 0.03),
+                            letterSpacing: 0,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.fade,
+                            color: Colors.white,
+                          ),
+                        )
+                      ]),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

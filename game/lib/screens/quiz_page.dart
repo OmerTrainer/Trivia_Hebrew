@@ -83,7 +83,9 @@ class _QuizScreenState extends State<QuizScreen> {
     if (goodanswer == false) {}
   }
 
-  void startTimer() {
+  void startTimer(double widthTimer) {
+    
+
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       setState(() {
         if (pressAttention == true || pressAttentionNotReal == true) {
@@ -93,7 +95,7 @@ class _QuizScreenState extends State<QuizScreen> {
           if (seconds > 0) {
             seconds--;
             if (width > 0) {
-              width -= 7.611428571428571;
+              width -= widthTimer;
             }
             if (width <= 0) {
               width = 0;
@@ -104,18 +106,16 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
-  late int seconds;
-  late double width = DeviceUtils.getScaledWidth(context, 0.37);
+  late int seconds = 20;
+  late double width = DeviceUtils.getScaledWidth(context, 0.40);
 
   @override
   void initState() {
     super.initState();
-    seconds = 20;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      width = DeviceUtils.getScaledWidth(context, 0.37);
-    });
-
-    startTimer();
+      double widthTimer=width/seconds;
+    startTimer(widthTimer);
+   });
   }
 
   @override
