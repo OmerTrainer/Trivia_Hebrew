@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game/assets.dart';
-import 'package:game/ui/bottom_tab_bar.dart';
-import 'package:game/ui/bottom_tab_item.dart';
-import 'package:game/ui/play_now_button.dart';
+import 'package:game/ui/text_outline.dart';
 import 'package:game/utils/device_utils.dart';
 import 'dart:async';
 import '../ui/quiz_TopBar.dart';
@@ -24,71 +20,17 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   Timer? timer;
   bool pressAttention = false;
-  bool pressAttentionNotReal = false;
+  bool pressAttentionWrongAnswer = false;
   int notrealanswer = -1;
   bool isDisable = false;
 
-  List<Widget> buildAnswers(List answer) {
-    List<Widget> buttons = [];
-    for (var index = 0; index < answer.length; index++) {
-      buttons.add(GestureDetector(
-          onTap: isDisable
-              ? () {}
-              : () {
-                  if (widget.question.answers[index].correctAnswer) {
-                    setState(() {
-                      pressAttention = true;
-                      isDisable = true;
-                    });
-                  } else {
-                    setState(() {
-                      notrealanswer = index;
-                      pressAttentionNotReal = true;
-                      isDisable = true;
-                    });
-                  }
-                },
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color:
-                  pressAttention && widget.question.answers[index].correctAnswer
-                      ? Color(0xFFB8D192)
-                      : pressAttentionNotReal &&
-                              widget.question.answers[index].correctAnswer
-                          ? Color(0xFFB8D192)
-                          : notrealanswer == index
-                              ? Colors.red
-                              : Color(0xFFC3C8DC),
-            ),
-            width: DeviceUtils.getScaledWidth(context, 0.8),
-            height: DeviceUtils.getScaledHeight(context, 0.07),
-            margin: const EdgeInsets.all(8),
-            child: Center(
-              child: Text(
-                widget.question.answers[index].title,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: DeviceUtils.getScaledFontSize(context, 14),
-                ),
-              ),
-            ),
-          )));
-    }
-    return buttons;
-  }
-
-  void test(bool goodanswer, int questionINdex) {
-    if (goodanswer == false) {}
-  }
+  late int seconds = 20;
+  late double width = DeviceUtils.getScaledWidth(context, 0.40);
 
   void startTimer(double widthTimer) {
-    
-
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {
-        if (pressAttention == true || pressAttentionNotReal == true) {
+        if (pressAttention == true || pressAttentionWrongAnswer == true) {
           timer!.cancel();
         }
         if (timer!.isActive) {
@@ -106,16 +48,68 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
-  late int seconds = 20;
-  late double width = DeviceUtils.getScaledWidth(context, 0.40);
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      double widthTimer=width/seconds;
-    startTimer(widthTimer);
-   });
+      double widthTimer = width / seconds;
+      startTimer(widthTimer);
+    });
+  }
+
+  List<Widget> buildAnswers(List answer) {
+    List<Widget> buttons = [];
+    for (var index = 0; index < answer.length; index++) {
+      buttons.add(Padding(
+        padding:
+            EdgeInsets.only(top: DeviceUtils.getScaledHeight(context, 0.007)),
+        child: GestureDetector(
+            onTap: isDisable
+                ? () {}
+                : () {
+                    if (widget.question.answers[index].correctAnswer) {
+                      setState(() {
+                        pressAttention = true;
+                        isDisable = true;
+                      });
+                    } else {
+                      setState(() {
+                        notrealanswer = index;
+                        pressAttentionWrongAnswer = true;
+                        isDisable = true;
+                      });
+                    }
+                  },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: pressAttention &&
+                        widget.question.answers[index].correctAnswer
+                    ? const Color(0xFFB8D192)
+                    : pressAttentionWrongAnswer &&
+                            widget.question.answers[index].correctAnswer
+                        ? const Color(0xFFB8D192)
+                        : notrealanswer == index
+                            ? Colors.red
+                            : const Color(0xFFC3C8DC),
+              ),
+              width: DeviceUtils.getScaledWidth(context, 0.8),
+              height: DeviceUtils.getScaledHeight(context, 0.07),
+              margin: const EdgeInsets.all(8),
+              child: Center(
+                child: Text(
+                  widget.question.answers[index].title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: DeviceUtils.getScaledFontSize(context, 14),
+                  ),
+                ),
+              ),
+            )),
+      ));
+    }
+    return buttons;
   }
 
   @override
@@ -133,7 +127,6 @@ class _QuizScreenState extends State<QuizScreen> {
             Column(
               children: [
                 TopOfThePage(width: width, seconds: seconds),
-                // middle of the page
                 Stack(children: [
                   Container(
                     color: Colors.white.withOpacity(0.5),
@@ -162,7 +155,6 @@ class _QuizScreenState extends State<QuizScreen> {
                     ),
                   ),
                 ]),
-                //end of middle of the page
                 Column(children: buildAnswers(widget.question.answers))
               ],
             ),
@@ -177,38 +169,21 @@ class _QuizScreenState extends State<QuizScreen> {
                     color: const Color(0xFFA27264),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  width: 350,
-                  height: 100,
+                  width: DeviceUtils.getScaledWidth(context, 0.9),
+                  height: DeviceUtils.getScaledHeight(context, 0.12),
                   child: Column(
                     children: [
-                      Stack(children: [
-                        Text(
-                          "!נגמר הזמן",
-                          style: TextStyle(
-                            fontSize:
-                                DeviceUtils.getScaledFontSize(context, 21),
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.bold,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 3
-                              ..color = Colors.black,
-                          ),
-                        ),
-                        Text(
-                          "!נגמר הזמן",
-                          style: TextStyle(
-                            fontSize:
-                                DeviceUtils.getScaledFontSize(context, 21),
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ]),
-                      Container(
+                      TextOutline(
+                        text: "!נגמר הזמן",
+                        fontsize: DeviceUtils.getScaledFontSize(context, 21),
+                        colorOutline: Colors.black,
+                        colorFill: Colors.white,
+                        fontWeight: 3,
+                      ),
+                      Expanded(
                         child: Image.asset(
                           Assets.donkeyCrying,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game/assets.dart';
+import 'package:game/ui/text_outline.dart';
 import 'package:game/utils/device_utils.dart';
 
 class TopOfThePage extends StatelessWidget {
@@ -17,7 +18,7 @@ class TopOfThePage extends StatelessWidget {
     return SizedBox(
       height: DeviceUtils.getScaledHeight(context, 0.22),
       width: double.infinity,
-      child: Row( 
+      child: Row(
         children: [
           Expanded(
             child: Align(
@@ -30,10 +31,11 @@ class TopOfThePage extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 20),
             alignment: Alignment.topCenter,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(DeviceUtils.getScaledWidth(context, 0.08)),
+              borderRadius: BorderRadius.circular(
+                  DeviceUtils.getScaledWidth(context, 0.08)),
               child: Stack(children: [
                 Container(
                   width: DeviceUtils.getScaledWidth(context, 0.40),
@@ -82,31 +84,14 @@ class TopOfThePage extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                         ),
-                        Text(
-                          seconds.toString(),
-                          style: TextStyle(
-                            fontSize:
+                        TextOutline(
+                            text: seconds.toString(),
+                            fontsize:
                                 DeviceUtils.getScaledHeight(context, 0.03),
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.bold,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth =
-                                  DeviceUtils.getScaledHeight(context, 0.004)
-                              ..color = const Color(0xFF355036),
-                          ),
-                        ),
-                        Text(
-                          seconds.toString(),
-                          style: TextStyle(
-                            fontSize:
-                                DeviceUtils.getScaledHeight(context, 0.03),
-                            letterSpacing: 0,
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.fade,
-                            color: Colors.white,
-                          ),
-                        )
+                            colorOutline: const Color(0xFF355036),
+                            colorFill: Colors.white,
+                            fontWeight:
+                                DeviceUtils.getScaledHeight(context, 0.004)),
                       ]),
                     ),
                   ),
