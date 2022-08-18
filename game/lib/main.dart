@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:game/assets.dart';
+import 'package:game/interfaces/user.dart';
 import 'package:game/screens/home_page.dart';
 import 'package:game/ui/bottom_tab_bar.dart';
 import 'package:game/utils/device_utils.dart';
+import 'package:game/services/services.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/user_provider.dart';
@@ -39,6 +41,25 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
+}
+
+void connect(context, _userData) {
+  final forecast = Services.createUser(
+      context,
+      User(
+        name: _userData!['name'],
+        f_id: _userData!['id'],
+        email: _userData!['email'],
+      ));
+  forecast.then(
+    (value) => Services.updateOnlineStatues(
+        context,
+        User(
+          name: _userData!['name'],
+          f_id: _userData!['id'],
+          email: _userData!['email'],
+        )),
+  );
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -122,6 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                                   setState(() {
                                     _userData = requestData;
+                                    connect(context, _userData);
+
                                     facebookUser.setEmail(_userData!['email']);
                                     facebookUser.setImage(
                                         _userData!['picture']['data']['url']);
@@ -191,11 +214,11 @@ class _MyHomePageState extends State<MyHomePage> {
           image: AssetImage(Assets.backgroundImage),
         ),
       ),
-      child: const Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.transparent,
         bottomNavigationBar: BottomNavBar(),
         body: SizedBox.expand(
-          child: HomePage(),
+          child: HomePage(userData: _userData),
         ),
       ),
     );

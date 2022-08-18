@@ -8,7 +8,9 @@ import '../ui/play_now_button.dart';
 import '../utils/device_utils.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  Map? userData;
+
+  HomePage({Key? key, required this.userData}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -35,9 +37,11 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.center,
               children: [
                 Image.asset(Assets.peakcockImage),
-                const Positioned(
+                Positioned(
                   bottom: 0,
-                  child: PlayNowButton(),
+                  child: PlayNowButton(
+                    userData: widget.userData,
+                  ),
                 ),
               ],
             ),
