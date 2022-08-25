@@ -20,7 +20,7 @@ class _BottomTabItemState extends State<BottomTabItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => widget.onPressed,
+      onTap: () => widget.onPressed(),
       child: Image.asset(
         widget.imageUrl,
       ),

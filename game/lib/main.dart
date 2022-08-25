@@ -3,6 +3,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:game/assets.dart';
 import 'package:game/interfaces/user.dart';
 import 'package:game/screens/home_page.dart';
+import 'package:game/screens/profile_page.dart';
 import 'package:game/ui/bottom_tab_bar.dart';
 import 'package:game/utils/device_utils.dart';
 import 'package:game/services/services.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        routes: {ProfileScreen.routeName: (ctx) => const ProfileScreen()},
       ),
     );
   }

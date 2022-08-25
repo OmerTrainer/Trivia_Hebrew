@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game/screens/profile_page.dart';
 
 import '../assets.dart';
 import '../utils/device_utils.dart';
@@ -37,7 +38,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
             BottomTabItem(
               imageUrl: Assets.profileImage,
-              onPressed: () => {},
+              onPressed: () {
+                print('sdfjsdlf');
+                Navigator.of(context).pushNamed(ProfileScreen.routeName);
+              },
             ),
           ],
         ),
