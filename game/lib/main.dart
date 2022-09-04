@@ -4,11 +4,8 @@ import 'package:game/assets.dart';
 import 'package:game/screens/home_page.dart';
 import 'package:game/ui/bottom_tab_bar.dart';
 import 'package:game/utils/device_utils.dart';
-import './screens/quiz_page.dart';
-import './entities/questions_class.dart';
-import './entities/answer.dart';
-import 'dart:math';
 import 'package:provider/provider.dart';
+import './routes/routes.dart';
 
 import 'providers/user_provider.dart';
 
@@ -17,32 +14,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  var test = Questions(
-      question: "?באיזו סדרה הם מופיעים",
-      answers: [
-        Answer(
-          title: "אחת שיודעת",
-          correctAnswer: true,
-          id: Random().nextInt(2000),
-        ),
-        Answer(
-          title: "בתאל הבתולה",
-          correctAnswer: false,
-          id: Random().nextInt(2000),
-        ),
-        Answer(
-          title: "אחת asfljsangpsangpas",
-          correctAnswer: false,
-          id: Random().nextInt(2000),
-        ),
-        Answer(
-          title: "sga[poskg[paskg[askgלה",
-          correctAnswer: false,
-          id: Random().nextInt(2000),
-        )
-      ],
-      imageUrl: "https://data.whicdn.com/images/312976051/original.jpg");
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -55,10 +26,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: const MyHomePage(title: 'Flutter Demo Home Page'),
-        routes: {
-          // '/': ((ctx) => ProductsOverview()),
-          QuizScreen.routeName: (context) => QuizScreen(question: test),
-        },
+        routes: customRoutes,
       ),
     );
   }
